@@ -1,0 +1,17 @@
+M-dwarf spectra from MUSCLES Treasury survey, downloaded from: https://archive.stsci.edu/prepds/muscles/. Data are described in detail in France et al. (2016, ApJ) and Loyd et al (2016, ApJ).
+
+Data downloaded are the "*adapt-const-res-sed.fits = Panchromatic SED binned to a constant 1 Å resolution, downsampled in low signal-to-noise regions to avoid negative fluxes. One file per star."
+
+
+
+
+
+
+Python example usage: 
+from astropy.io import fits
+import matplotlib.pyplot as plt
+spec = fits.getdata('hlsp_muscles_multi_multi_gj436_broadband_v10_adapt-const-res-sed.fits',1)
+plt.plot(spec['WAVELENGTH'],spec['FLUX'])
+plt.xlabel('Wavelength (Angstroms)')
+plt.ylabel('Flux Density (erg/cm-2/s-1/A-1)')
+plt.show()

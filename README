@@ -1,0 +1,73 @@
+This repository holds all the code, auxiliary files, and intermediate files used in Ranjan, Wordsworth & Sasselov 2017b. Using this material, one can replicate every one of the figures used in our paper, as well as run models of one's own formulation.
+
+The anticipated use cases are:
+1. Testing/validating the findings of Ranjan, Wordsworth & Sasselov (2017)
+2. Using the Ranjan, Wordsworth & Sasselov radiative transfer model to compute UV surface fluence for user-defined atmospheres and surfaces.
+
+If making use of this code or the generated auxiliary files, please cite the descriptor paper:
+Ranjan, S, Wordsworth, Robin D. and Sasselov, Dimitar D. "The Surface UV Environment on Prebiotic Planets Oribting M-dwarfs and Implications for Habitability". Submitted to Astrobiology (2017).
+
+Questions and feedback welcome! Please send any comments or questions to: Sukrit Ranjan, sranjan@cfa.harvard.edu.
+
+==========================
+===HOW TO USE
+==========================
+This section describes how to run our radiative transfer model to compute the fluxes and intensities at the surface of planets orbiting M-dwarfs for user-specified atmosphere and surface conditions.
+
+The code is run from run_radiativetransfer.py. This script calls and runs the function uv_radtrans contained in the file radiativetransfer.py, which performs the two-stream radiative transfer at the core of the code. In run_radiativetransfer.py, you tell uv_radtrans what to run on and specify what options to use. radiativetransfer.py contains a thorough description of possible input parameters.
+
+In addition to the options set in run_radiativetransfer.py (e.g. surface albedo, solar zenith angle) the code requires an atmospheric profile, i.e. T, P, n, composition as a function of z (altitude), as well as TOA solar flux. To generate these files, run
+
+"python form_atmospheric_profiles.py"
+"python process_steadystate_spectra.py"
+"python process_flare_spectra.py"
+
+at the command prompt to generate the input files required to generate the figures shown in our paper.
+
+Once you have configured your input files, set your options in run_radiativetransfer.py, and saved, you can run the code by typing 
+
+"python run_radiativetransfer.py"
+
+at the command prompt. The code will then generate files giving various spectral parameters, including the TOA intensity, the surface flux, the surface actinic flux, the surface intensity, the diffuse and direct intensities at the surface. It will also print out diagnostic information to the prompt that will help you keep an eye on what the code is doing.
+
+To compute dose rates for the surface radiances calculated and stored in TwoStreamOutput by run_radiative_transfer.py, run
+
+"python compute_UV_doses_extended.py"
+
+To make the various plots in our paper, once these steps are complete run Plot_XXX.py, where XXX=Methods, Results, or Discussion. Which plot is generated can be controlled by True/False flags within these files.
+
+
+==========================
+===CONTENTS
+==========================
+The code in this project fall into a few different categories:
+
+RADIATIVE TRANSFER MODEL
+---run_radiativetransfer.py: Top-level code, runs run_radiativetransfer.py
+
+---radiativetransfer.py: Core code, runs the radiative transfer calculation
+
+---twostream_toon_func.py: The computational core of the code, it is an implementation of two-stream radiative transfer based on the paper by Toon et al (1989). Go here to mess with how radiative transfer is computted, e.g. switching from quadrature closure to Eddington closure.
+
+---radiativetransfer_subfunctions.py: contains various helper functions used by the main code. 
+
+---radiativetransfer_albedo_subfunctions.py: contains helper functions that specifically help with computing the albedo (diffuse and direct).
+
+---cross_sections_subfunctions.py: contains helper functions that specifically help with how the cross-sections are computed.
+
+INPUT FILES
+---form_atmospheric_profiles.py: shows how we formed our atmospheric input files, and spectral input files for the young Sun and for M8V stars
+
+---process_steadystate_spectra.py: shows how we processed steady-state UV spectra of M-dwarfs into input files for our code
+
+---process_flare_spectra.py: shows how we processed flare UV spectra of M-dwarfs into input files for our code
+
+---prebioticearth_atmosphere_models.py: contains functions used by form_atmospheric_profiles.py to generate atmospheric profiles for different Martian atmospheres.
+
+INTERPRETATION/ANALYSIS
+---compute_uv_doses.py: computes the BEDs for different UV spectral fluences
+
+---Plot_Results: these codes reproduce the figures in the Results
+
+MISC
+---Cookbook.py: a few cookbook Python functions used by our various codes

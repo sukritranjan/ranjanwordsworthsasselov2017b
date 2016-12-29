@@ -1,0 +1,6 @@
+This directory contains steady-state (non-flaring) spectra of M-dwarfs, compiled by various VPL teams, and accessed at https://depts.washington.edu/naivpl/content/spectral-databases-and-tools
+
+--Proxima Centauri: From Meadows et al 2016. Uses IUE data. Massa & Fitzpatrick correction: unknown. Geocoronal emission/instrument background contamination: unknown (queries pending). Fluxes are at 1-AU distance.
+--AD Leo: From Segura et al (2005). Missing Lyman-Alpha line (??? -- see metadata in file). Uses IUE data. Massa & Fitzpatrick correction: yes. Geocoronal emission/instrument background contamination: unknown (query pending). Fluxes are at distance from Earth, 4.9 pc.
+--GJ644: From Segura et al (2005). Uses IUE data. Massa & Fitzpatrick correction: yes. Geocoronal emission/instrument background contamination: unknown (query pending). Fluxes are at distance from Earth, 6.2 pc. NOTE: IUE measurements of this star are singled out by France et al (2016) as being strongly affected by geocoronal contamination and instrument background, with up to 80% of incident fluence in some bands from non-stellar sources. 
+--HD 22049 (K2V): From Segura et al (2003).  Uses IUE data. Massa & Fitzpatrick correction: yes. Geocoronal emission/instrument background contamination: unknown (query pending). Fluxes are at distance from Earth (??? pc).
