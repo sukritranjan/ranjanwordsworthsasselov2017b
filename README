@@ -5,7 +5,7 @@ The anticipated use cases are:
 2. Using the Ranjan, Wordsworth & Sasselov radiative transfer model to compute UV surface fluence for user-defined atmospheres and surfaces.
 
 If making use of this code or the generated auxiliary files, please cite the descriptor paper:
-Ranjan, S, Wordsworth, Robin D. and Sasselov, Dimitar D. "The Surface UV Environment on Prebiotic Planets Oribting M-dwarfs and Implications for Habitability". Submitted to Astrobiology (2017).
+Ranjan, S, Wordsworth, Robin D. and Sasselov, Dimitar D. "The Surface UV Environment on Prebiotic Planets Oribting M-dwarfs and Implications for Habitability". Submitted to the Astrophysical Journal (2017).
 
 Questions and feedback welcome! Please send any comments or questions to: Sukrit Ranjan, sranjan@cfa.harvard.edu.
 
@@ -34,7 +34,7 @@ To compute dose rates for the surface radiances calculated and stored in TwoStre
 
 "python compute_UV_doses_extended.py"
 
-To make the various plots in our paper, once these steps are complete run Plot_XXX.py, where XXX=Methods, Results, or Discussion. Which plot is generated can be controlled by True/False flags within these files.
+To make the various plots in our paper, once these steps are complete run Plot_Results.py. Which plot is generated can be controlled by True/False flags within these files.
 
 
 ==========================
