@@ -422,8 +422,8 @@ tricyano300_base=tricyano_aqe_prodrate(wav_leftedges, wav_rightedges, youngearth
 ########################
 if calculate_all_doserates:
 	#First, get all files in directory
-	file_list = [f for f in os.listdir('./TwoStreamOutput/') if os.path.isfile(os.path.join('./TwoStreamOutput/', f))] #gets list of all filenames from directory ./TwoStreamOutput/
-	#file_list=['generalprebioticatm_exponential_vpl_adleo_greatflare_stellar.dat']
+	#file_list = [f for f in os.listdir('./TwoStreamOutput/') if os.path.isfile(os.path.join('./TwoStreamOutput/', f))] #gets list of all filenames from directory ./TwoStreamOutput/
+	file_list=['generalprebioticatm_exponential_vpl_adleo_greatflare_stellar.dat']
 	
 	#Loop over all files in directory
 	for filename in file_list:
@@ -437,7 +437,9 @@ if calculate_all_doserates:
 		umpgly_254=ump_glycosidic_photol(left, right, surface_int, 254., False, False)
 		tricyano254=tricyano_aqe_prodrate(left, right, surface_int, 254., False, False)
 		tricyano300=tricyano_aqe_prodrate(left, right, surface_int, 300., False, False)
-				
+		
+		pdb.set_trace()
+		
 		line=np.array([intrad120_200/intrad120_200_base,intrad200_300/intrad200_300_base, umpgly_193/umpgly_193_base, umpgly_230/umpgly_230_base, umpgly_254/umpgly_254_base, tricyano254/tricyano254_base, tricyano300/tricyano300_base])
 
 		#Save output
