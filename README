@@ -62,7 +62,7 @@ INPUT FILES
 
 ---process_flare_spectra.py: shows how we processed flare UV spectra of M-dwarfs into input files for our code
 
----prebioticearth_atmosphere_models.py: contains functions used by form_atmospheric_profiles.py to generate atmospheric profiles for different Martian atmospheres.
+---prebioticearth_atmosphere_models.py: contains functions used by form_atmospheric_profiles.py to generate atmospheric profiles for different prebiotic Earth atmospheres.
 
 INTERPRETATION/ANALYSIS
 ---compute_uv_doses.py: computes the BEDs for different UV spectral fluences
