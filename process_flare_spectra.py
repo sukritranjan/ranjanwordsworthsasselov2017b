@@ -114,7 +114,7 @@ def integrate_data(abscissa, data, leftedges, rightedges):
 ###Integrate data to coarser wavelength bins, specifically 1.0 nm resolution
 ########################
 wav_left=np.arange(120., 400., step=4.)
-wav_right=np.arange(121., 401., step=4.)
+wav_right=np.arange(124., 404., step=4.)
 wav=0.5*(wav_left+wav_right)
 
 adleo_quiesc_flux_int=integrate_data(adleo_quiesc_wav, adleo_quiesc_flux, wav_left, wav_right)
@@ -123,7 +123,7 @@ adleo_flare_912s_flux_int=integrate_data(adleo_flare_912s_wav, adleo_flare_912s_
 
 
 hawley_wav_left=np.arange(120., 172., step=4.)
-hawley_wav_right=np.arange(121., 173., step=4.)
+hawley_wav_right=np.arange(124., 176., step=4.)
 hawley_wav=0.5*(hawley_wav_left+hawley_wav_right)
 hawley2003_adleo_quiesc_flux_int=integrate_data(hawley2003_adleo_quiesc_wav, hawley2003_adleo_quiesc_flux, hawley_wav_left, hawley_wav_right)
 

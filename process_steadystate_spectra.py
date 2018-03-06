@@ -272,7 +272,7 @@ for ind in range(0, numdata):
 	####################
 	
 	wav_left=np.arange(120., 400., step=4.)
-	wav_right=np.arange(121., 401., step=4.)
+	wav_right=np.arange(124., 404., step=4.)
 	wav_centers=0.5*(wav_left+wav_right)
 	
 	rebinned_fluxes=integrate_data(wavelengths, fluxes, wav_left, wav_right)

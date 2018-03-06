@@ -5,9 +5,7 @@ The anticipated use cases are:
 2. Using the Ranjan, Wordsworth & Sasselov radiative transfer model to compute UV surface fluence for user-defined atmospheres and surfaces.
 
 If making use of this code or the generated auxiliary files, please cite the descriptor paper:
-Ranjan, S, Wordsworth, Robin D. and Sasselov, Dimitar D. "The Surface UV Environment on Prebiotic Planets Orbiting M-dwarfs: Implications for Prebiotic Chemistry & Need for Experimental Follow-Up". Submitted to the Astrophysical Journal (2017). arXiv: 1705.02350
-
-A Zenodo archive of this repository is available with DOI: 10.5281/zenodo.584133
+Ranjan, S, Wordsworth, R. D. and Sasselov, D. D. (2017). "The Surface UV Environment on Prebiotic Planets Orbiting M-dwarfs: Implications for Prebiotic Chemistry & Need for Experimental Follow-Up". ApJ, 843, 110. arXiv: 1705.02350
 
 Questions and feedback welcome! Please send any comments or questions to: Sukrit Ranjan, sranjan@cfa.harvard.edu.
 
