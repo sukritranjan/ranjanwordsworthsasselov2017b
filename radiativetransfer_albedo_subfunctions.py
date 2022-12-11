@@ -77,7 +77,7 @@ def get_surface_albedo(wav_left, wav_right, solarzenithangle,uniformalbedoflag, 
 	elif toreturn=='direct':
 		return albedo_dir
 	else:
-		print 'Error: invalid value for toreturn'
+		print('Error: invalid value for toreturn')
 		return np.zeros(np.shape(wav_left))
 
 
@@ -118,7 +118,7 @@ def albedo_ocean(wav, solarzenithangle, albtype):
 		return alpha_dif
 	else:
 		return np.zeros(np.shape(wav))
-		print 'Error: invalid argument for albtype'
+		print('Error: invalid argument for albtype')
 
 def albedo_snow(wav, solarzenithangle, isnew, albtype):
 	"""
@@ -147,7 +147,7 @@ def albedo_snow(wav, solarzenithangle, isnew, albtype):
 		alpha_1[inds2]=alpha_1[inds2]+.76
 		alpha_1[inds3]=alpha_1[inds3]+.325
 	else:
-		print 'Error: invalid value for isnew'
+		print('Error: invalid value for isnew')
 	
 	#Add in mu-dependence using Dickinson et al (1981) methodology
 	if mu>0.5:
@@ -168,7 +168,7 @@ def albedo_snow(wav, solarzenithangle, isnew, albtype):
 		return alpha_dif
 	else:
 		return np.zeros(np.shape(wav))
-		print 'Error: invalid argument for albtype'
+		print('Error: invalid argument for albtype')
 
 
 def albedo_desert(wav, solarzenithangle, albtype):
@@ -207,7 +207,7 @@ def albedo_desert(wav, solarzenithangle, albtype):
 		return alpha_dif
 	else:
 		return np.zeros(np.shape(wav))
-		print 'Error: invalid argument for albtype'	
+		print('Error: invalid argument for albtype'	)
 
 def albedo_tundra(wav, solarzenithangle, albtype):
 	"""
@@ -246,5 +246,5 @@ def albedo_tundra(wav, solarzenithangle, albtype):
 		return alpha_dif
 	else:
 		return np.zeros(np.shape(wav))
-		print 'Error: invalid argument for albtype'	
+		print('Error: invalid argument for albtype'	)
 	

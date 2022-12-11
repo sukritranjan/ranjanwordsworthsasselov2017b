@@ -27,7 +27,7 @@ import pdb
 #################################
 
 elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','rugheimer2015_M8A_ep0_stellar', 'muscles_gj1214_stellar',
-'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar', 'rugheimer2015_M8A_ep0_stellar']) #list of files to import and consider
+'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar', 'rugheimer2015_M8A_ep0_stellar', 'hip23309_stellar']) #list of files to import and consider
 
 
 for ind in range(0, len(elt_list)):
@@ -44,7 +44,7 @@ for ind in range(0, len(elt_list)):
 #################################
 
 elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','rugheimer2015_M8A_ep0_stellar', 'muscles_gj1214_stellar',
-'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar']) #list of files to import and consider
+'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar', 'hip23309_stellar']) #list of files to import and consider
 
 
 for ind in range(0, len(elt_list)):
@@ -61,7 +61,7 @@ for ind in range(0, len(elt_list)):
 #################################
 
 elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','rugheimer2015_M8A_ep0_stellar', 'muscles_gj1214_stellar',
-'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar', 'rugheimer2015_M8A_ep0_stellar']) #list of files to import and consider
+'muscles_gj176_stellar','muscles_gj436_stellar','muscles_gj581_stellar','muscles_gj667c_stellar','muscles_gj832_stellar','muscles_gj876_stellar','muscles_proxcen_stellar', 'vpl_adleo_greatflare_stellar', 'vpl_adleo_stellar', 'vpl_gj644_stellar', 'vpl_proxcen_stellar', 'rugheimer2015_M8A_ep0_stellar', 'hip23309_stellar']) #list of files to import and consider
 
 
 for ind in range(0, len(elt_list)):

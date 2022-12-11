@@ -48,8 +48,8 @@ if plot_steadystate_toa_surf:
     #elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','muscles_gj832_stellar', 'muscles_gj176_stellar','vpl_adleo_stellar','muscles_gj667c_stellar', 'muscles_gj581_stellar','muscles_gj436_stellar', 'vpl_gj644_stellar', 'muscles_gj876_stellar', 'muscles_proxcen_stellar', 'vpl_proxcen_stellar', 'muscles_gj1214_stellar','rugheimer2015_M8A_ep0_stellar']) #list of files to import and consider
     #labels=np.array(['Young \nSun','GJ 832','GJ 176','AD Leo','GJ 667C','GJ 581','GJ 436','GJ644','GJ876','Prox Cen \n(MUSCLES)','Prox Cen \n(VPL)','GJ1214','R+2015 M8V'])
 
-    elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','muscles_gj832_stellar' ,'vpl_adleo_stellar','muscles_gj667c_stellar', 'muscles_gj581_stellar', 'muscles_gj876_stellar', 'muscles_proxcen_stellar']) #list of files to import and consider
-    labels=np.array(['Young \nSun','GJ 832','AD Leo','GJ 667C','GJ 581','GJ 876','Prox Cen'])
+    elt_list=np.array(['general_youngsun_earth_highres_widecoverage_spectral','muscles_gj832_stellar' ,'vpl_adleo_stellar','muscles_gj667c_stellar', 'muscles_gj581_stellar', 'muscles_gj876_stellar', 'muscles_proxcen_stellar', 'hip23309_stellar']) #list of files to import and consider
+    labels=np.array(['Young \nSun','GJ 832','AD Leo','GJ 667C','GJ 581','GJ 876','Prox Cen', 'HIP 23309'])
     
     numelt=len(elt_list)
     
@@ -72,13 +72,20 @@ if plot_steadystate_toa_surf:
         
         if elt=='general_youngsun_earth_highres_widecoverage_spectral':
             colorval='black'
+            linewidthval=3
+        elif elt=='hip23309_stellar':
+            linewidthval=3
+            colorval=colors[ind-1]
         else:
             colorval=colors[ind-1]
+            linewidthval=1
+
         
-        ax1.plot(wav_dict[elt], erg2phot(surf_dict[elt], wav_dict[elt]), marker=markerlist[ind], markeredgewidth=0., markersize=markersizeval, linestyle='-', linewidth=1, color=colorval, label=labels[ind])
+        ax1.plot(wav_dict[elt], erg2phot(surf_dict[elt], wav_dict[elt]), marker=markerlist[ind], markeredgewidth=0., markersize=markersizeval, linestyle='-', linewidth=linewidthval, color=colorval, label=labels[ind])
+        
         
         inds_to_average=np.where((wav_dict[elt]>=200.0) & (wav_dict[elt] <=282.0))
-        print(np.average(erg2phot(surf_dict[elt], wav_dict[elt])[inds_to_average])/1.0E10)
+        print(elt, np.average(erg2phot(surf_dict[elt], wav_dict[elt])[inds_to_average])/1.0E10)
 
         
 
@@ -87,7 +94,7 @@ if plot_steadystate_toa_surf:
     ax1.set_ylabel(r'Surface Radiance (photons s$^{-1}$cm$^{-2}$nm$^{-1}$)', fontsize=12)
     ax1.set_xscale('linear')
     ax1.set_xlabel('Wavelength (nm)', fontsize=12)
-    ax1.set_xlim([190., 300.])
+    ax1.set_xlim([200., 280.])
     
     xvals=np.linspace(200., 280., num=100)
     ax1.fill_between(xvals, np.ones(np.shape(xvals))*3.2E10, np.ones(np.shape(xvals))*1.04E11, facecolor='hotpink')

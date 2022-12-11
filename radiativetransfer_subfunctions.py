@@ -7,7 +7,6 @@ import numpy as np
 import pdb
 from scipy import interpolate as interp
 import scipy.integrate
-import cPickle as pickle
 
 
 ########################
@@ -292,7 +291,7 @@ def get_molar_concentrations(z_centers,filename, molecule):
 	elif molecule=='h2s':
 		ind=8
 	else:
-		print 'Invalid entry for molecule'
+		print('Invalid entry for molecule')
 		return z_centers*0.0
 	
 	z_list=importeddata[:,0] #This is the height in atmosphere, in cm
@@ -302,11 +301,11 @@ def get_molar_concentrations(z_centers,filename, molecule):
 	if z_list[0]>z_centers[-1]: #If the lowest z-value in the model exceeds the lowest z-value of the desired abscissa
 		z_list=np.append(0.0, z_list)
 		mr_list=np.append(mr_list[0], mr_list)
-		print 'Warning: desired abscissa beyond lower range of mixing ratio file. Padding used.'
+		print('Warning: desired abscissa beyond lower range of mixing ratio file. Padding used.')
 	if z_list[-1]<z_centers[0]:
 		z_list=np.append(z_list, z_centers[0])
 		mr_list=np.append(mr_list, mr_list[-1])
-		print 'Warning: desired abscissa beyond upper range of mixing ratio file. Padding used.'
+		print('Warning: desired abscissa beyond upper range of mixing ratio file. Padding used.')
 	
 	mr_func=interp.interp1d(z_list, mr_list, kind='linear')
 	mr_evals=mr_func(z_centers)

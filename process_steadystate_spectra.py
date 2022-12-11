@@ -123,38 +123,38 @@ muscles_earthequivdists=np.zeros(len(muscles_starnames))
 
 
 for ind in range(0, len(muscles_starnames)):
-	muscles_starname=muscles_starnames[ind]
-	muscles_stardist=muscles_stardists[ind]
-	
-	albedo_correction_factor=muscles_albcorr[ind]
-	
-	filename='./Raw_Data/Mdwarf_Spectra/Steady-State/MUSCLES/hlsp_muscles_multi_multi_'+muscles_starname+'_broadband_v20_adapt-const-res-sed.fits'
-	
-	spec= fits.getdata(filename,1)
-	spec_wav=spec['WAVELENGTH'] #wavelength scale in A
-	spec_flux=spec['FLUX'] #fluxes in erg/s/cm2/A
+    muscles_starname=muscles_starnames[ind]
+    muscles_stardist=muscles_stardists[ind]
+    
+    albedo_correction_factor=muscles_albcorr[ind]
+    
+    filename='./Raw_Data/Mdwarf_Spectra/Steady-State/MUSCLES/hlsp_muscles_multi_multi_'+muscles_starname+'_broadband_v20_adapt-const-res-sed.fits'
+    
+    spec= fits.getdata(filename,1)
+    spec_wav=spec['WAVELENGTH'] #wavelength scale in A
+    spec_flux=spec['FLUX'] #fluxes in erg/s/cm2/A
 
-	#header=fits.getheader(filename,0)
-	#boloflux=header['BOLOFLUX'] #units of ergs/s/cm2 ### This is not working b/c missing header keyword. For the time being, kludge as follows:
-	boloflux_list=spec['FLUX']/spec['BOLOFLUX'] 
-	boloflux=np.median(boloflux_list)
-	
-	luminosity=boloflux*4.*np.pi*(muscles_stardist*pc)**2. #total luminosity of star
-	
-	earthequivdist=np.sqrt((luminosity/Lsun)/albedo_correction_factor) #distance in AU, INCLUDING correction for M-dwarf redshift of radiation (Segura et al. 2003)
-	
-	#if muscles_starname=='gj551':
-		#print luminosity/Lsun #0..00158, matches 0.00155 L_sun (Meadows et al. 2016) to 2 sig figs.
-	
-	muscles_earthequivdists[ind]=earthequivdist
-	
-	starTeffs[muscles_starname]=muscles_starTeffs[ind]
-	starplanetdists[muscles_starname]=earthequivdist
-	
-	wav[muscles_starname]=spec_wav*1.e-1 #Convert from A to nm
-	flux[muscles_starname]=spec_flux*((muscles_stardist*pc)**2./(earthequivdist*AU)**2.)*1.e1 #Convert from erg/s/cm2/A to erg/s/cm2/nm
-	
-	
+    #header=fits.getheader(filename,0)
+    #boloflux=header['BOLOFLUX'] #units of ergs/s/cm2 ### This is not working b/c missing header keyword. For the time being, kludge as follows:
+    boloflux_list=spec['FLUX']/spec['BOLOFLUX'] 
+    boloflux=np.median(boloflux_list)
+    
+    luminosity=boloflux*4.*np.pi*(muscles_stardist*pc)**2. #total luminosity of star
+    
+    earthequivdist=np.sqrt((luminosity/Lsun)/albedo_correction_factor) #distance in AU, INCLUDING correction for M-dwarf redshift of radiation (Segura et al. 2003)
+    
+    #if muscles_starname=='gj551':
+        #print luminosity/Lsun #0..00158, matches 0.00155 L_sun (Meadows et al. 2016) to 2 sig figs.
+    
+    muscles_earthequivdists[ind]=earthequivdist
+    
+    starTeffs[muscles_starname]=muscles_starTeffs[ind]
+    starplanetdists[muscles_starname]=earthequivdist
+    
+    wav[muscles_starname]=spec_wav*1.e-1 #Convert from A to nm
+    flux[muscles_starname]=spec_flux*((muscles_stardist*pc)**2./(earthequivdist*AU)**2.)*1.e1 #Convert from erg/s/cm2/A to erg/s/cm2/nm
+    
+    
 
 #pdb.set_trace()
 
@@ -177,6 +177,41 @@ starplanetdists['kapteyn']=np.sqrt((0.012)/0.9) #distance in AU, INCLUDING corre
 wav['kapteyn']=np.concatenate((kapteyn_wav_1,kapteyn_wav_2,kapteyn_wav_3))*0.1 #convert A to nm
 flux['kapteyn']=np.concatenate((kapteyn_flux_1,kapteyn_flux_2,kapteyn_flux_3))*(1./starplanetdists['kapteyn'])**2.*10. #scale from 1 AU to earth-equiv distance and convert from erg/s/cm2/A to erg/s/cm2/nm
 
+
+
+
+########################
+###Import HIP23309 data
+########################
+d_hip23309=26.8*pc #Distance to HIP 23309 in cm; Malo et al. 2014
+
+for elt in ['hip23309', 'hip23309_ext', 'hip23309_rebinned']:
+    starTeffs[elt]=3886. #Pineda et al. 2021
+    starplanetdists[elt]=np.sqrt((6.82E32/Lsun)/0.9) #distance in AU, INCLUDING correction for M-dwarf redshift of radiation (Segura et al. 2003). Luminosity from Pineda et al. 2021
+
+###pure UVIT HIP23309
+#Import from file we synthesized
+hip23309_wav, hip23309_flux=np.genfromtxt('./Raw_Data/Mdwarf_Spectra/Steady-State/UVIT/HIP23309spec.txt', skip_header=0, skip_footer=0,usecols=(0,1), unpack=True) #nm, W/m2/nm; fluxes are as received at Earth. 
+#Scale, convert units
+wav['hip23309']=hip23309_wav #nm
+flux['hip23309']=hip23309_flux * (d_hip23309/(starplanetdists['hip23309']*AU))**2.0 * 1.0E3#scale from flux at Earth to flux on exoplanet orbiting star. Then, convert from Watt/m^2/nm to erg/s/cm2/nm
+
+###UVIT HIP23309+HST
+#Import from file we synthesized
+hip23309_wav_ext, hip23309_flux_ext=np.genfromtxt('./Raw_Data/Mdwarf_Spectra/Steady-State/UVIT/HIP23309spec_hstextended.txt', skip_header=0, skip_footer=0,usecols=(0,1), unpack=True) #nm, W/m2/nm; fluxes are as received at Earth. 
+#Scale, convert units
+wav['hip23309_ext']=hip23309_wav_ext #nm
+flux['hip23309_ext']=hip23309_flux_ext * (d_hip23309/(starplanetdists['hip23309']*AU))**2.0 * 1.0E3#scale from flux at Earth to flux on exoplanet orbiting star. Then, convert from Watt/m^2/nm to erg/s/cm2/nm
+
+### UVIT HIP23309 with FUV rebinned
+#Import from file we synthesized
+hip23309_rebinned_wav, hip23309_rebinned_flux=np.genfromtxt('./Raw_Data/Mdwarf_Spectra/Steady-State/UVIT/HIP23309spec_rebinned.txt', skip_header=0, skip_footer=0,usecols=(0,1), unpack=True) #nm, W/m2/nm; fluxes are as received at Earth. 
+#Scale, convert units
+wav['hip23309_rebinned']=hip23309_rebinned_wav #nm
+flux['hip23309_rebinned']=hip23309_rebinned_flux * (d_hip23309/(starplanetdists['hip23309_rebinned']*AU))**2.0 * 1.0E3#scale from flux at Earth to flux on exoplanet orbiting star. Then, convert from Watt/m^2/nm to erg/s/cm2/nm
+
+
+
 ########################################################################
 ########################################################################
 ########################################################################
@@ -185,7 +220,7 @@ flux['kapteyn']=np.concatenate((kapteyn_flux_1,kapteyn_flux_2,kapteyn_flux_3))*(
 ########################################################################
 ########################################################################
 
-dataset_list=np.array(['proxcen-vpl', 'adleo', 'gj644', 'gj1214','gj876','gj436','gj581','gj667c','gj176','gj832', 'gj551', 'kapteyn'])
+dataset_list=np.array(['proxcen-vpl', 'adleo', 'gj644', 'gj1214','gj876','gj436','gj581','gj667c','gj176','gj832', 'gj551','hip23309'])
 
 ########################
 ###Plot
@@ -197,8 +232,8 @@ colors=cm.rainbow(np.linspace(0,1,numdata))
 
 ax.plot(wav['youngsun'], flux['youngsun'],linewidth=1, linestyle='--', color='black', label='Young Sun')
 for ind in range(0, numdata):
-	dataset=dataset_list[ind]
-	ax.plot(wav[dataset], flux[dataset],linewidth=1, linestyle='-', color=colors[ind], label=dataset)
+    dataset=dataset_list[ind]
+    ax.plot(wav[dataset], flux[dataset],linewidth=1, linestyle='-', color=colors[ind], label=dataset)
 
 
 
@@ -214,7 +249,7 @@ ax.legend(bbox_to_anchor=[0, 1.03, 1., .152],loc=3, ncol=3, mode='expand', borde
 plt.tight_layout(rect=(0,0,1,0.85))
 
 
-plt.savefig('./Plots/quiescent_plot.pdf', orientation='portrait',papertype='letter', format='pdf')
+plt.savefig('./Plots/quiescent_plot.pdf', orientation='portrait', format='pdf')
 
 
 #########################################################################
@@ -230,82 +265,103 @@ plt.savefig('./Plots/quiescent_plot.pdf', orientation='portrait',papertype='lett
 ########################
 
 def integrate_data(abscissa, data, leftedges, rightedges):
-	"""
-	Takes: abscissa and corresponding data to be integrated, left edges of new bins, right edges of new bins (abscissa, leftedges and rightedges must have same units)
-	
-	Returns: data integrated to new bins
-	
-	Method: functionalizes data using stepwise linear interpolation, then integrates using gaussian quadrature technique
-	"""
-	data_func=interp.interp1d(abscissa, data, kind='linear')
-	
-	num_bin=len(leftedges)
-	
-	data_integrated=np.zeros(num_bin)
-	
-	for ind in range(0, num_bin):
-		data_integrated[ind]=scipy.integrate.quad(data_func, leftedges[ind], rightedges[ind], epsabs=0., epsrel=1.e-3, limit=1000)[0]/(rightedges[ind]-leftedges[ind])
-	
-	return data_integrated
+    """
+    Takes: abscissa and corresponding data to be integrated, left edges of new bins, right edges of new bins (abscissa, leftedges and rightedges must have same units)
+    
+    Returns: data integrated to new bins
+    
+    Method: functionalizes data using stepwise linear interpolation, then integrates using gaussian quadrature technique
+    """
+    data_func=interp.interp1d(abscissa, data, kind='linear')
+    
+    num_bin=len(leftedges)
+    
+    data_integrated=np.zeros(num_bin)
+    
+    for ind in range(0, num_bin):
+        data_integrated[ind]=scipy.integrate.quad(data_func, leftedges[ind], rightedges[ind], epsabs=0., epsrel=1.e-3, limit=1000)[0]/(rightedges[ind]-leftedges[ind])
+    
+    return data_integrated
 
 #########################
 ####Rebin to common scale
 #########################
 
-dataset_list=np.array(['adleo','proxcen-vpl',  'gj644', 'gj1214','gj876','gj436','gj581','gj667c','gj176','gj832', 'gj551'])
-outfile_list=np.array(['vpl_adleo', 'vpl_proxcen', 'vpl_gj644', 'muscles_gj1214','muscles_gj876','muscles_gj436','muscles_gj581','muscles_gj667c','muscles_gj176','muscles_gj832', 'muscles_proxcen'])
+# dataset_list=np.array(['adleo','proxcen-vpl',  'gj644', 'gj1214','gj876','gj436','gj581','gj667c','gj176','gj832', 'gj551', 'hip23309', 'hip23309', 'hip23309_ext'])
+# outfile_list=np.array(['vpl_adleo', 'vpl_proxcen', 'vpl_gj644', 'muscles_gj1214','muscles_gj876','muscles_gj436','muscles_gj581','muscles_gj667c','muscles_gj176','muscles_gj832', 'muscles_proxcen', 'hip23309', 'hip23309_ext'])
+dataset_list=np.array(['hip23309', 'hip23309_ext', 'hip23309_rebinned'])
+outfile_list=np.array(['hip23309', 'hip23309_ext', 'hip23309_rebinned'])
+
+
 numdata=len(dataset_list)
 
 for ind in range(0, numdata):
-	####################
-	###Step 1: identify data
-	####################
-	dataset=dataset_list[ind]
-	outfile_name=outfile_list[ind]
-	
-	starplanetdist=starplanetdists[dataset]
-	wavelengths=wav[dataset]
-	fluxes=flux[dataset]
-	
-	####################
-	###Step 2: set rebinned wavelength scale
-	####################
-	
-	wav_left=np.arange(120., 400., step=4.)
-	wav_right=np.arange(124., 404., step=4.)
-	wav_centers=0.5*(wav_left+wav_right)
-	
-	rebinned_fluxes=integrate_data(wavelengths, fluxes, wav_left, wav_right)
-	
-	####################
-	###Plot rebinned data, so we can make sure everything is shipshape
-	####################
-	fig, ax1=plt.subplots(1, figsize=(8,5))
-	ax1.plot(wavelengths, fluxes, marker='s', color='black', label='Original')
-	ax1.plot(wav_centers, rebinned_fluxes, marker='s', color='blue', label='Rebinned')	
-	ax1.set_yscale('log')
-	ax1.set_ylim([1.e-4, 1.e4])
-	ax1.set_xlim([120.,400.])
-	ax1.set_xlabel('nm')
-	ax1.set_ylabel('erg/s/cm2/nm')
-	ax1.set_title(dataset)
-	ax1.legend(loc=0)
-	plt.show()		
-	####################
-	###Print rebinned data to file
-	####################
-	spectable=np.zeros([len(wav_left), 4])
-	spectable[:,0]=wav_left
-	spectable[:,1]=wav_right
-	spectable[:,2]=wav_centers
-	spectable[:,3]=rebinned_fluxes
-	
-	header='Left Bin Edge (nm)	Right Bin Edge (nm)	Bin Center (nm)		Stellar Flux (erg/s/nm/cm2) at '+str(starplanetdist)+' (AU)\n'
-	
-	f=open('./StellarInput/'+outfile_name+'_stellar_input.dat', 'w')
-	f.write(header)
-	np.savetxt(f, spectable, delimiter='		', fmt='%1.7e', newline='\n')
-	f.close()
-plt.show()
-
+    ####################
+    ###Step 1: identify data
+    ####################
+    dataset=dataset_list[ind]
+    outfile_name=outfile_list[ind]
+    
+    starplanetdist=starplanetdists[dataset]
+    wavelengths=wav[dataset]
+    fluxes=flux[dataset]
+    
+    ####################
+    ###Step 2: set rebinned wavelength scale
+    ####################
+    
+    wav_left=np.arange(132., 400., step=4.)
+    wav_right=np.arange(136., 404., step=4.)
+    
+    # if dataset=='hip23309_ext':
+    #     wav_left=np.arange(120., 400., step=1.)
+    #     wav_right=np.arange(121., 401., step=1.)
+    # else:
+    #     wav_left=np.arange(132., 400., step=4.)
+    #     wav_right=np.arange(136., 404., step=4.)
+    wav_centers=0.5*(wav_left+wav_right)
+    
+    rebinned_fluxes=integrate_data(wavelengths, fluxes, wav_left, wav_right)
+    
+    ####################
+    ###Plot rebinned data, so we can make sure everything is shipshape
+    ####################
+    fig, ax1=plt.subplots(1, figsize=(8,5))
+    ax1.plot(wavelengths, fluxes, marker='s', color='black', label='Original')
+    ax1.plot(wav_centers, rebinned_fluxes, marker='s', color='blue', label='Rebinned')    
+    ax1.set_yscale('log')
+    ax1.set_ylim([1.e-4, 1.e4])
+    ax1.set_xlim([120.,400.])
+    ax1.set_xlabel('nm')
+    ax1.set_ylabel('erg/s/cm2/nm')
+    ax1.set_title(dataset)
+    ax1.legend(loc=0)
+    plt.show()        
+    
+    ####################
+    ###Print rebinned data to file
+    ####################
+    spectable=np.zeros([len(wav_left), 4])
+    spectable[:,0]=wav_left
+    spectable[:,1]=wav_right
+    spectable[:,2]=wav_centers
+    spectable[:,3]=rebinned_fluxes
+    
+    header='Left Bin Edge (nm)    Right Bin Edge (nm)    Bin Center (nm)        Stellar Flux (erg/s/nm/cm2) at '+str(starplanetdist)+' (AU)\n'
+    
+    f=open('./StellarInput/'+outfile_name+'_stellar_input.dat', 'w')
+    f.write(header)
+    np.savetxt(f, spectable, delimiter='        ', fmt='%1.7e', newline='\n')
+    f.close()
+    
+        
+    ######################
+    ###Output HIP23309 data to file using Hu conventions, for consistency with rest.
+    ######################
+    if dataset=='hip23309' or dataset=='hip23309_ext' or 'hip23309_rebinned':
+        composite_toprint=np.zeros((len(wavelengths), 2))
+        composite_toprint[:,0]=wavelengths #wavelengths in nm
+        composite_toprint[:,1]=fluxes*np.sqrt(0.9) *1.0E-3#remove albedo correction factor of 0.9, which Segura+2005 consider but Hu+2012 don't. Then, convert from erg/s/cm^2/nm to Watt/m^2
+        np.savetxt('../hu-code-sr-uvspectraproject/Data/'+dataset+'.txt', composite_toprint, fmt='%5.6f\t%1.6e', newline='\n')
+        
 

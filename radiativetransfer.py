@@ -14,7 +14,6 @@ Note: if want to see figure with computed surface radiance, uncomment plt.show()
 
 import numpy as np
 import matplotlib.pyplot as plt
-import cPickle as pickle
 import pdb
 import cross_sections_subfunctions as css
 import twostream_toon_func as twostr
@@ -95,16 +94,16 @@ def uv_radtrans(z_upper_limit=64.e5, z_step=1.e5, inputatmofilelabel='volcanicma
 	if includeco2cloud:
 		co2iceparamsfile='./ParticulateOpticalParameters/'+co2iceparamsfile
 		co2_cloud_optical_depths[co2cloudlayerinds]=co2cloudlayerods
-		print 'CO2 cloud deck at (km):', z_center[co2cloudlayerinds]/1.e5
-	print 'co2 cloud optical depth is (unscaled):', np.sum(co2_cloud_optical_depths) #check to make sure all shipshape
+		print('CO2 cloud deck at (km):', z_center[co2cloudlayerinds]/1.e5)
+	print('co2 cloud optical depth is (unscaled):', np.sum(co2_cloud_optical_depths)) #check to make sure all shipshape
 
 	#To get h2o cloud optical depths, specify the optical depth at 500 nm.
 	h2o_cloud_optical_depths=np.zeros(np.shape(z_center))
 	if includeh2ocloud:
 		h2oiceparamsfile='./ParticulateOpticalParameters/'+h2oiceparamsfile
 		h2o_cloud_optical_depths[h2ocloudlayerinds]=h2ocloudlayerods
-		print 'H2O cloud deck at (km):', z_center[h2ocloudlayerinds]/1.e5		
-	print 'h2o cloud optical depth is (unscaled):', np.sum(h2o_cloud_optical_depths) #check to make sure all shipshape
+		print('H2O cloud deck at (km):', z_center[h2ocloudlayerinds]/1.e5)		
+	print('h2o cloud optical depth is (unscaled):', np.sum(h2o_cloud_optical_depths)) #check to make sure all shipshape
 
 	##To get dust optical depths: assume exponential profile
 	dust_optical_depths=np.zeros(np.shape(z_center))
@@ -113,7 +112,7 @@ def uv_radtrans(z_upper_limit=64.e5, z_step=1.e5, inputatmofilelabel='volcanicma
 		H_d=11.e5 #dust scale height, in cm
 		prefactor=tau_d*(np.exp(z_center[-1]/H_d))*(1.-np.exp(-z_step/H_d))
 		dust_optical_depths=prefactor*np.exp(-z_center/H_d)
-	print 'dust optical depth is (unscaled):', np.sum(dust_optical_depths), '\n' #check to make sure all shipshape
+	print('dust optical depth is (unscaled):', np.sum(dust_optical_depths), '\n') #check to make sure all shipshape
 
 	#-----------------
 	#File I/O
@@ -328,7 +327,7 @@ def uv_radtrans(z_upper_limit=64.e5, z_step=1.e5, inputatmofilelabel='volcanicma
 
 	###Check for consistency:
 	surf_int_diff=(surface_intensity-surface_intensity_2)/surface_intensity
-	print 'Check: fractional agreement of two ways of calculating surface radiance', np.nanmax(np.abs(surf_int_diff)), '\n' #need nanmax to elimate divide by 0 errors
+	print('Check: fractional agreement of two ways of calculating surface radiance', np.nanmax(np.abs(surf_int_diff)), '\n') #need nanmax to elimate divide by 0 errors
 
 	########################
 	###Check energy conservation
@@ -338,30 +337,30 @@ def uv_radtrans(z_upper_limit=64.e5, z_step=1.e5, inputatmofilelabel='volcanicma
 	outgoing_flux_tot=np.sum(F_plus_tau0[0,:])
 
 	if outgoing_flux_tot <= incoming_flux_tot:
-		print 'Outgoing Flux<= Incoming Flux: Consistent with Energy Conservation', '\n'
+		print('Outgoing Flux<= Incoming Flux: Consistent with Energy Conservation', '\n')
 	if outgoing_flux_tot > incoming_flux_tot:
-		print 'Outgoing Flux > Incoming Flux: Energy Conservation Violated DANGER DANGER DANGER', '\n','DANGER DANGER DANGER'
+		print('Outgoing Flux > Incoming Flux: Energy Conservation Violated DANGER DANGER DANGER', '\n','DANGER DANGER DANGER')
 
 	########################
 	###Print some more diagnostics (useful check)
 	########################
 
 
-	print 'Total gas column density is (cm-2):', np.sum(columndensity_z)
-	print 'N2 column density is (cm-2):', np.sum(colden_gas_species_z[0,:])
-	print 'CO2 column density is (cm-2):', np.sum(colden_gas_species_z[1,:])
-	print 'H2O column density is (cm-2):', np.sum(colden_gas_species_z[2,:])
-	print 'CH4 column density is (cm-2):', np.sum(colden_gas_species_z[3,:])
-	print 'SO2 column density is (cm-2):', np.sum(colden_gas_species_z[4,:])
-	print 'O2 column density is (cm-2):', np.sum(colden_gas_species_z[5,:])
-	print 'O3 column density is (cm-2):', np.sum(colden_gas_species_z[6,:])
-	print 'H2S column density is (cm-2):', np.sum(colden_gas_species_z[7,:])
-	print '\n'
-	print 'Total particulate column density is (cm-2):', np.sum(colden_particles_species_z)
-	print 'H2O ice cloud column density is (cm-2):', np.sum(colden_particles_species_z[0,:])
-	print 'CO2 ice cloud column density is (cm-2):', np.sum(colden_particles_species_z[1,:])
-	print 'Dust column density is (cm-2):', np.sum(colden_particles_species_z[2,:])
-	print '\n'
+	print('Total gas column density is (cm-2):', np.sum(columndensity_z))
+	print('N2 column density is (cm-2):', np.sum(colden_gas_species_z[0,:]))
+	print('CO2 column density is (cm-2):', np.sum(colden_gas_species_z[1,:]))
+	print('H2O column density is (cm-2):', np.sum(colden_gas_species_z[2,:]))
+	print('CH4 column density is (cm-2):', np.sum(colden_gas_species_z[3,:]))
+	print('SO2 column density is (cm-2):', np.sum(colden_gas_species_z[4,:]))
+	print('O2 column density is (cm-2):', np.sum(colden_gas_species_z[5,:]))
+	print('O3 column density is (cm-2):', np.sum(colden_gas_species_z[6,:]))
+	print('H2S column density is (cm-2):', np.sum(colden_gas_species_z[7,:]))
+	print('\n')
+	print('Total particulate column density is (cm-2):', np.sum(colden_particles_species_z))
+	print('H2O ice cloud column density is (cm-2):', np.sum(colden_particles_species_z[0,:]))
+	print('CO2 ice cloud column density is (cm-2):', np.sum(colden_particles_species_z[1,:]))
+	print('Dust column density is (cm-2):', np.sum(colden_particles_species_z[2,:]))
+	print('\n')
 
 	#inds=np.where(surface_intensity/intensity_toa<0.01)
 	#indmax=np.max(inds) #here I assume monotonically decreasing
@@ -439,7 +438,7 @@ def uv_radtrans(z_upper_limit=64.e5, z_step=1.e5, inputatmofilelabel='volcanicma
 	f.write(header)
 	np.savetxt(f, toprint, delimiter='		', fmt='%1.7e', newline='\n')
 	f.close()
-	print 'END\n'
+	print('END\n')
 	#plt.show()
 
 	"""

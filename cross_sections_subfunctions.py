@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import scipy.stats
 from scipy import interpolate as interp
 from matplotlib.pyplot import cm
-import cPickle as pickle
 
 micron2cm=1.e-4 #1 micron in cm
 """
@@ -140,12 +139,12 @@ def compute_band_cross_section_td(leftedges, rightedges, temps,molecule):
 		lt_ray_xc_interp=lt_ray_xc_func(rt_wav)
 
 	else:
-		print 'Error: invalid value for molecule'
+		print('Error: invalid value for molecule')
 	
 	#With the molecule-specific info loaded, calculate cross-sections
 	#For each atmospheric layer:
 	for l_ind in range(0, n_layers):
-		print l_ind
+		print(l_ind)
 		T=temps[l_ind] #temperature of layer
 		
 		#Form interpolated temperature functions, for integration
