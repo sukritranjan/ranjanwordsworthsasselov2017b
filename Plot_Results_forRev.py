@@ -66,7 +66,7 @@ if plot_steadystate_toa_surf:
     markersizeval=8.
     colors=cm.rainbow(np.linspace(0,1,numelt-1))
     markerlist=['s', 'h', 'X','d','o','^','p','*']
-    ax1.set_title('Surface Radiance', fontsize=14)
+    # ax1.set_title('Surface Radiance', fontsize=14)
     for ind in range(0, numelt):
         elt=elt_list[ind]
         
